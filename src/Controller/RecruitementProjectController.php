@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecruitementProjectController extends AbstractController
 {
     /**
+     *
      * @Route("/recruitement/project/new", name="createRecruitementProject")
      */
     public function index(JobDescriptionRepository $jobDescriptionRepository, QuestionnaireRepository $questionnaireRepository, Request $request): Response
@@ -110,8 +111,12 @@ class RecruitementProjectController extends AbstractController
                 }
             }
 
+            // On génère une URL unique pour le projet.
             $uniqueLink = $newProject->generateUniqueLink($newProject->getName());
-            $newProject->setUniqueLink($uniqueLink);
+            $newProject->setSlug($uniqueLink);
+
+            // On enregistre le code unique dans la base. Il servira d'identifiant unique du projet.
+            $newProject->setUid($uniqueLink);
 
             // On persiste et on flush.
             $em->persist($newProject);
@@ -121,5 +126,20 @@ class RecruitementProjectController extends AbstractController
 
             return new JsonResponse($jsonData);
         }
+    }
+
+    /**
+     * Accès à la page pour postuler à un projet de recrutement. On charge les données du projet à partir du slug présent dans l'URL.
+     * @Route("/application/{slug}", name="getCandidateService")
+     * @return Response
+     */
+    public function getCandidateService(ProjectRepository $projectRepository, $slug): Response
+    {
+        // On charge le projet de recrutement à partir du slug unique.
+        $project = $projectRepository->findOneBy(['uid' => $slug]);
+
+        return $this->render('/application/index.html.twig', [
+            'clientProject' => $project
+        ]);
     }
 }

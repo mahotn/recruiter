@@ -6,6 +6,7 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
@@ -77,11 +78,27 @@ class Project
     private $managerJobTitle;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
+     * @ORM\Column(type="string", nullable=true, unique=true)
      */
-    private $uniqueLink;
+    private $slug;
 
-    private $BASE_URL = "https://127.0.0.1/recrutement/";
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $uid;
 
     public function __construct()
     {
@@ -240,16 +257,48 @@ class Project
         return $this;
     }
 
-    public function getUniqueLink(): ?string
+    public function getSlug(): ?string
     {
-        return $this->uniqueLink;
+        return $this->slug;
     }
 
-    public function setUniqueLink(?string $uniqueLink): self
+    public function setSlug(string $slug):self
     {
-        $this->uniqueLink = $uniqueLink;
+        $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @param mixed $created_at
+     */
+    public function setCreatedAt($created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param mixed $updated_at
+     */
+    public function setUpdatedAt($updated_at): void
+    {
+        $this->updated_at = $updated_at;
     }
 
     /**
@@ -265,11 +314,22 @@ class Project
         $randomNb = strval(rand(1, 9999));
 
         // Création de l'URL.
-        $string = $this->BASE_URL;
-        $string .= $projectName . "_";
-        $string .= $timestamp . "_";
+//        $string = $projectName . "_";
+        $string = $timestamp . "-";
         $string .= $randomNb;
 
         return $string;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(?string $uid): self
+    {
+        $this->uid = $uid;
+
+        return $this;
     }
 }
