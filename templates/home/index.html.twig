@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <body class="antialiased">
+        <div class="page">
+            {% include 'navbar.html.twig' %}
+            <div class="content">
+                <div class="container-xl">
+                    <h1>Bienvenue sur Recruiter ✅</h1>
+
+                    Vous êtes bien connecté
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+
+                    {% if is_granted('ROLE_USER_VALIDATED') %}
+                        <p>Vous avez bien accès à tout ! </p>
+                    {% elseif is_granted('ROLE_USER_RESTRICTED_ACCESS')%}
+                        <div class="alert alert-important alert-info" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12.01" y2="8" /><polyline points="11 12 12 12 12 16 13 16" /></svg>
+                                </div>
+                                <div>
+                                    Afin d'accéder à toutes les fonctionnalités de l'application, merci de valider votre compte en cliquant sur le lien que vous avez reçu par email.
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div> {# end page #}
+    </body>
+{% endblock %}

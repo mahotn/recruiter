@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recruiter - Fiches de poste {% endblock %}
+
+{% block body %}
+<body class="antialiased">
+    <div class="page">
+        {% include 'navbar.html.twig' %}
+
+        <div class="content">
+            <div class="container-xl">
+
+                {% include 'flash_msg.html.twig' %}
+
+                {# card contenant la table des fiches de poste #}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row w-100 d-flex flex-row justify-content-between align-items-center">
+                            <div class="col-auto">
+                                <h3 class="card-title">Liste des fiches de poste</h3>
+                            </div>
+                            <div class="col-auto d-print-none">
+                                <a href="{{ path('newJobDescription') }}" class="btn btn-primary"><span class="mr-2">Ajouter</span><svg xmlns="http://www.w3.org/2000/svg" class="icon m-0" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 0 !important;">
+                        {% if(jobDescriptionsList is defined) %}
+                        <div class="table-responsive">
+                            <table class="table table-vcenter table-mobile-md card-table">
+                                <thead>
+                                <tr>
+                                    <th>Fonction</th>
+                                    <th>Nb de projets en cours</th>
+                                    <th>Date de création</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                 {# boucle pour afficher tous les projets #}
+                                 {% for jobDescription in jobDescriptionsList %}
+                                    <tr>
+                                        <td data-label="">{{ jobDescription.jobTitle }}</td>
+                                        <td>3 projets en cours</td>
+                                        <td>AJOUTER DATE</td>
+                                        <td>
+                                            <div class="btn-list flex-nowrap">
+                                                <a href="{{ path('getJobDescriptionDetails', {'id': jobDescription.id }) }}" class="btn btn-white">Voir</a>
+                                                <a href="{{ path('editJobDescription', {'id': jobDescription.id }) }}" class="btn btn-white">Modifier</a>
+                                                <a href="{{ path('deleteJobDescription', {'id': jobDescription.id }) }}" class="btn btn-white">Supprimer</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                            <div class="w-100 d-flex d-inline-flex justify-content-center align-items-center p-5">
+                                <span>Vous n'avez aucune fiche de poste enregistrée.</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div> {# end containter-xl #}
+        </div>
+    </div> {# end page #}
+</body>
+{% endblock %}

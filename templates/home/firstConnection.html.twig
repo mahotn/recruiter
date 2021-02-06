@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<body class="antialiased">
+    <div class="page">
+        {% include 'navbar.html.twig' %}
+        <div class="content">
+            <div class="container-xl">
+                <h1>Bienvenue sur Recruiter ✅</h1>
+
+
+                Ceci est votre première connexion.
+
+                {{ form_start(formFirstConnection) }}
+                {{ form_end(formFirstConnection) }}
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

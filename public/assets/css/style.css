@@ -1,0 +1,30 @@
+.arrow_back {
+    position: absolute;
+    left: 1em;
+    top: 10px;
+}
+
+/*Modification du style des alert-box*/
+.flash-msg {
+    position: absolute !important;
+    right: 1em !important;
+    bottom: 1em !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 70px !important;
+}
+
+.alert-success {
+    background-color: #2FB344 !important;
+    color: #FFF !important;
+}
+
+.alert-danger {
+    background-color: #D63939 !important;
+    color: #FFF !important;
+}
+
+.active-step {
+    background-color: red;
+    color: #FFF;
+}

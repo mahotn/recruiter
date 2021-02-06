@@ -1,0 +1,253 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recruiter - Fiches de poste {% endblock %}
+
+{% block body %}
+    <body class="antialiased">
+    <div class="page">
+        {% include 'navbar.html.twig' %}
+
+        <div class="content">
+            <div class="container-xl">
+
+                {% include 'flash_msg.html.twig' %}
+
+                <div class="row row-cards">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-auto">
+                                        <h3 class="card-title">Progression</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="list-group list-group-flush list-group-hoverable overflow-auto"
+                                 id="project-steps">
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <a href="#new-project-step1" class="active-step">Etape 1 : Associer une
+                                                fiche métier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <a href="#new-project-step2">Etape 2 : Paramétrer les détails du projet</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <a href="#new-project-step3">Etape 3 : Questionnaire</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="card-tabs">
+                            <ul class="nav nav-tabs" data-bs-toggle="tabs" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="#tab-new-project" class="nav-link" data-bs-toggle="tab">Associer un
+                                        projet</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-new-project" class="card tab-pane active show">
+                                    <div class="card-body">
+                                        <div id="new-project-step1">
+                                            {% if jobDescriptionList is defined %}
+                                                {% if jobDescriptionList is not empty %}
+                                                    <div class="table-responsive">
+                                                        <table class="table table-vcenter table-mobile-md card-table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>Sélectionnez une fiche métier à associer à votre
+                                                                    projet
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-select"
+                                                                            id="newProjectSelectJobDescription">
+                                                                        <option value="">Sélectionnez une fiche de
+                                                                            poste
+                                                                        </option>
+                                                                        {% for jobDescription in jobDescriptionList %}
+                                                                            <option value="{{ jobDescription.id }}">{{ jobDescription.jobTitle }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="row w-100 d-flex d-inline-flex justify-content-center align-items-center">
+                                                        <div class="col-auto text-center">
+                                                            <p>Vous n'avez pas encore crée de fiche métier.</p>
+                                                            <a href="#" class="btn btn-primary">Créer une fiche
+                                                                métier</a>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                            <div id="jobDescription-preview" style="display: none;">
+                                            </div>
+                                        </div>
+
+                                        <div id="new-project-step2" style="display: none" ;>
+                                            {#                                             TO DO CHARGER FORMULAIRE#}
+                                            {% if newProjectForm is defined %}
+                                                {{ form_start(newProjectForm) }}
+                                                {{ form_end(newProjectForm) }}
+                                            {% endif %}
+                                        </div>
+
+                                        <div id="new-project-step3" style="display: none" ;>
+                                            {% if questionnairesList is defined %}
+                                                {% if questionnairesList is not empty %}
+                                                    <select class="form-select"
+                                                            id="newProjectSelectQuestionnaire">
+                                                        <option value="">Sélectionnez un questionnaire
+                                                        </option>
+                                                        {% for questionnaire in questionnairesList %}
+                                                            <option value="{{ questionnaire.id }}">{{ questionnaire.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    {% else %}
+                                                        <div class="row w-100 d-flex d-inline-flex justify-content-center align-items-center">
+                                                            <div class="col-auto text-center">
+                                                                <p>Vous n'avez pas encore crée de questionnaire.</p>
+                                                                <a href="#" class="btn btn-primary">Créer un questionnaire</a>
+                                                            </div>
+                                                        </div>
+                                                {% endif %}
+                                            {% endif %}
+                                            <div id="questionnaire-preview" style="display: none;">
+                                            </div>
+                                        </div>
+                                    </div> {# end card-body #}
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-primary" id="new-project-prev"
+                                                    style="display: none;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md" width="24"
+                                                     height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                     stroke="currentColor" fill="none" stroke-linecap="round"
+                                                     stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z"></path>
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <line x1="5" y1="12" x2="11" y2="18"></line>
+                                                    <line x1="5" y1="12" x2="11" y2="6"></line>
+                                                </svg>
+                                                Précédent
+                                            </button>
+                                        </div>
+
+                                        <div class="col-auto ml-auto">
+                                            <button type="button" class="btn btn-primary" id="new-project-next">
+                                                Suivant
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-md"
+                                                     style="margin: 0 -.25em 0 .25em;" width="24" height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z"></path>
+                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    <line x1="13" y1="18" x2="19" y2="12"></line>
+                                                    <line x1="13" y1="6" x2="19" y2="12"></line>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="ajaxProjectFormSubmit" value="{{ path('ajaxCreateProject') }}">
+                                </div> {# end card-footer #}
+                            </div>
+                        </div> {# end tab-content #}
+                    </div> {# end card-tabs #}
+                </div> {# end col-lg-8 #}
+            </div> {# end row-cards #}
+        </div> {# end containter-xl #}
+    </div> {# end content #}
+    </div> {# end page #}
+    </body>
+
+    <script>
+        /**
+         * Chargement du contenu de la fiche métier lors de la sélection d'une option dans le input select dédié.
+         * @type {jQuery|HTMLElement}
+         */
+        let jobDescriptionSelect = $('#newProjectSelectJobDescription');
+        jobDescriptionSelect.on('change', function () {
+            $.ajax({
+                url: "{{ path('ajaxGetJobDescriptionDetails') }}",
+                type: 'POST',
+                data: {id: jobDescriptionSelect.val()}
+            }).done(function (data) {
+                console.log('La réponse de la base : ' + JSON.stringify(data));
+                console.log(typeof data);
+
+                let target = $('#jobDescription-preview');
+                // On efface la prévisualisation précédente.
+                target.empty();
+
+                // Création et organisation du HTML pour display de la fiche métier.
+                let div = $('<div></div>');
+                let jobTitle = $('<p>' + data[0].jobTitle + '</p>');
+                let description = $('<p>' + data[0].description + '</p>');
+                div.append(jobTitle).append(description);
+
+                for (let i = 0; i < data[0].missions.length; i++) {
+                    let missionItem = $('<p>' + data[0].missions[i] + '</p>');
+                    div.append(missionItem);
+                }
+
+                for (let i = 0; i < data[0].skills.length; i++) {
+                    let skillItem = $('<p>' + data[0].skills[i] + '</p>');
+                    div.append(skillItem);
+                }
+
+                target.css('display', 'block');
+                target.append(div);
+
+            });
+        });
+
+        let questionnaireSelect = $('#newProjectSelectQuestionnaire');
+        questionnaireSelect.on('change', function () {
+            $.ajax({
+                url: "{{ path('ajaxGetQuestionnaire') }}",
+                type: 'POST',
+                data: {id: questionnaireSelect.val()}
+            }).done(function (data) {
+                console.log('La grande réponse de la base : ' + JSON.stringify(data));
+                console.log(typeof data);
+
+                let target = $('#questionnaire-preview');
+                // On efface la prévisualisation précédente.
+                target.empty();
+
+                // Création et organisation du HTML pour display de la fiche métier.
+                let div = $('<div></div>');
+                let questionnaireName = $('<p>' + data[0].name + '</p>');
+                div.append(questionnaireName);
+
+                for (let i = 0; i < data[0].questions.length; i++) {
+                    let questionItem = $('<p>' + data[0].questions[i] + '</p>');
+                    div.append(questionItem);
+                }
+
+                target.css('display', 'block');
+                target.append(div);
+
+            });
+        });
+    </script>
+{% endblock %}

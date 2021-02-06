@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recruiter - Fiches de poste {% endblock %}
+
+{% block body %}
+    <body class="antialiased">
+    <div class="page">
+        {% include 'navbar.html.twig' %}
+
+        <div class="content">
+            <div class="container-xl">
+
+                {% include 'flash_msg.html.twig' %}
+
+                {# card contenant la table des fiches de poste #}
+                {% if jobDescription is defined %}
+                    {% if jobDescription is not empty %}
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-auto">
+                                        <h3 class="card-title">Fiche de poste | {{ jobDescription.jobTitle }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body" style="padding: 0 !important;">
+                                Description :
+                                <div class="mb-3">
+                                    {{ jobDescription.description }}
+                                </div>
+
+                                Liste des missions :
+                                {% for mission in jobDescription.missions %}
+                                    <div class="mb-3">
+                                        {{ mission.libelle }}
+                                    </div>
+                                {% endfor %}
+
+                                Liste des compétences :
+                                {% for skill in jobDescription.skills %}
+                                    <div class="mb-3">
+                                        {{ skill.libelle }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+            </div> {# end containter-xl #}
+        </div>
+    </div> {# end page #}
+    </body>
+{% endblock %}

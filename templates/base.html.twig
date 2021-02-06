@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+{#BLOC HEAD PAR DEFAUT #}
+{% block head %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('assets/libs/tabler/css/tabler.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
+{#        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>#}
+        {#        jQuery#}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {#        DEVBRIDGE AUTOCOMPLETE#}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.27/jquery.autocomplete.min.js"></script>
+    </head>
+{% endblock %}
+
+
+{#BLOC BODY PAR DEFAUT#}
+{% block body %}
+    {#BLOC NAVIGATION PAR DEFAUT#}
+    {% block navbar %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/libs/tabler/js/tabler.js') }}"></script>
+    <script src="{{ asset('assets/libs/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/filePreview.js') }}"></script>
+    <script src="{{ asset('assets/js/registrationForm.js') }}"></script>
+    <script src="{{ asset('assets/js/newProjectManager.js') }}"></script>
+{% endblock %}
+
+</html>

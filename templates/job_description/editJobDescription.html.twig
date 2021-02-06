@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recruiter - Fiches de poste {% endblock %}
+
+{% block body %}
+    <body class="antialiased">
+    <div class="page">
+        {% include 'navbar.html.twig' %}
+
+        <div class="content">
+            <div class="container-xl">
+                {# card contenant la table des fiches de poste #}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row g-2 align-items-center">
+                            <div class="col-auto">
+                                <h3 class="card-title">Nouvelle fiche de poste</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(editJobDescriptionForm) }}
+                        <div class="mb-3">
+                            {{ form_row(editJobDescriptionForm.jobTitle) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_row(editJobDescriptionForm.description) }}
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="add-mission" data-list-selector="#missions-ul-list">Ajouter une
+                                mission
+                            </button>
+
+                            <ul id="missions-ul-list" data-prototype="{{ form_row(editJobDescriptionForm.missions.vars.prototype.libelle)|e }}" data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ editJobDescriptionForm.missions|length }}">
+                                {%  for mission in editJobDescriptionForm.missions %}
+                                    <li>{{ form_row(mission.libelle) }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="button" class="add-skill" data-list-selector="#skills-ul-list">Ajouter une
+                                compétence
+                            </button>
+
+                            <ul id="skills-ul-list" data-prototype="{{ form_row(editJobDescriptionForm.skills.vars.prototype.libelle)|e }}" data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ editJobDescriptionForm.skills|length }}">
+                                {%  for skill in editJobDescriptionForm.skills %}
+                                    <li>{{ form_row(skill.libelle) }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        {{ form_end(editJobDescriptionForm) }}
+                    </div> {# end card-body #}
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div> {# end containter-xl #}
+        </div> {# end content #}
+    </div> {# end page #}
+    </body>
+
+    <script>
+        // Gestion de l'ajout des missions et des compétences.
+        $(document).ready(function () {
+            // Au clic sur le bouton ajouter, on sélectionne la liste cible ul à laquelle on ajoute un item li contenant la valeur de l'input.
+            $(".add-mission").click(function (e) {
+                let ulList = $($(this).attr('data-list-selector'));
+                let counter = ulList.data('widget-counter') || ulList.children().length;
+
+                let newTag = ulList.attr('data-prototype');
+                newTag = newTag.replace(/__name__/g, counter);
+                counter++;
+                ulList.data('widget-counter', counter);
+
+                // On ajoute le newTag au li défini dans l'attribut data-widget-tag de la balise ul.
+                let newElement = $(ulList.attr('data-widget-tags')).html(newTag);
+                newElement.appendTo(ulList);
+            });
+        });
+
+        $(document).ready(function () {
+            // Au clic sur le bouton ajouter, on sélectionne la liste cible ul à laquelle on ajoute un item li contenant la valeur de l'input.
+            $(".add-skill").click(function (e) {
+                let ulList = $($(this).attr('data-list-selector'));
+                let counter = ulList.data('widget-counter') || ulList.children().length;
+
+                let newTag = ulList.attr('data-prototype');
+                newTag = newTag.replace(/__name__/g, counter);
+                counter++;
+                ulList.data('widget-counter', counter);
+
+                // On ajoute le newTag au li défini dans l'attribut data-widget-tag de la balise ul.
+                let newElement = $(ulList.attr('data-widget-tags')).html(newTag);
+                newElement.appendTo(ulList);
+            });
+        });
+    </script>
+    </body>
+{% endblock %}

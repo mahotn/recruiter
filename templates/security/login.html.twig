@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<body class="antialiased d-flex flex-column">
+
+{# Lien de retour vers l'accueil #}
+<a href="{{ path('index') }}" class="arrow_back">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+         stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <line x1="5" y1="12" x2="11" y2="18"/>
+        <line x1="5" y1="12" x2="11" y2="6"/>
+    </svg>
+</a>
+
+<div class="flex-fill d-flex flex-column justify-content-center">
+    <div class="container-tight py-6">
+        <div class="text-center mb-4">
+            LOGO
+        </div>
+
+        <div class="card card-md">
+            <div class="card-body">
+                <h2 class="card-title mb-4 text-center">Connexion</h2>
+
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {#    {% if app.user %}#}
+                    {#        <div class="mb-3">#}
+                    {#            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>#}
+                    {#        </div>#}
+                    {#    {% endif %}#}
+                    <div class="mb-3">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                               class="form-control" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    </div>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
+                    <div class="form-footer">
+                        <button class="btn btn-primary w-100" type="submit">
+                            Connexion
+                        </button>
+                    </div>
+                </form>
+            </div> {# card-body #}
+        </div>
+    </div>
+</div>
+</body>
+                {% endblock %}
