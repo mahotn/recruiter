@@ -1,17 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ApplicationController!{% endblock %}
+{% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <body class="antialiased">
+    <div class="page">
 
-<div class="example-wrapper">
+        <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark">Nom du client</h1>
 
-   {%  if clientProject is defined %}
-    {{ clientProject.name }}
-   {% endif %}
-</div>
+                <div class="navbar-flex flex-row d-lg-none">
+                    <div class="nav-item dropdown d-none d-md-flex me-3">
+                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notification"></a>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
+                        <div class="card">
+                            <div class="card-body">LOREM IPSUM</div>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu" aria-expanded="false">
+                            <span class="avatar avatar-sm">IMAGE PROFIL</span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div>Nom user connecté</div>
+                                <div class="mt-1 small text-muted">Email</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="navbar-collapse collapse" id="navbar-menu">
+                    <ul class="navbar-nav pt-lg-3">
+                       <li class="nav-item">
+                           <a href="#" class="nav-link">Entreprise</a>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <div class="content">
+            <div class="container-xl">
+
+                {%  if clientProject is defined %}
+                    {{ clientProject.name }}
+                {% endif %}
+            </div>
+        </div>
+    </div> {# end page #}
+    </body>
 {% endblock %}
